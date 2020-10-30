@@ -8,7 +8,10 @@ import android.icu.text.LocaleDisplayNames;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,28 +26,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView srno,name,quantity,type;
-    private Button btnadd,btnshow;
-    //private int Srno = 1;
-    //newitem itmd;
-    //private  String s;
-    //private ListView listView;
-    //FirebaseDatabase database;
-    //DatabaseReference databaseReference;
+    private TextView srno, name, quantity, type;
+    private Button btnadd, btnshow;
+    private int Srno = 1;
+    private newitem itmd;
+    private String s;
+    private ListView listView;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
 
 
+    private void setUI() {
+        srno = (TextView) findViewById(R.id.srview);
+        name = (TextView) findViewById(R.id.nameview);
+        quantity = (TextView) findViewById(R.id.quantityview);
+        type = (TextView) findViewById(R.id.typeview);
+        btnadd = (Button) findViewById(R.id.btnadd);
+        btnshow = (Button) findViewById(R.id.btnshow);
+        listView = (ListView) findViewById(R.id.listview);
 
-    //List<newitem> items = new ArrayList<>();
-
-    private void setUI(){
-        srno = (TextView)findViewById(R.id.srview);
-        name = (TextView)findViewById(R.id.nameview);
-        quantity = (TextView)findViewById(R.id.quantityview);
-        type = (TextView)findViewById(R.id.typeview);
-        btnadd = (Button)findViewById(R.id.btnadd);
-        //btnshow = (Button)findViewById(R.id.btnshow);
-        //listView=(ListView)findViewById(R.id.listview);
-        //firebaseRead();
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,18 +60,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
     }
-    private void setActivity(){
-        Intent intent = new Intent(this,additem.class);
+
+    private void setActivity() {
+        Intent intent = new Intent(this, additem.class);
         startActivity(intent);
     }
     /*private  void firebaseRead(){
-        databaseReference = database.getInstance().getReference().child("User1");
+        databaseReference = database.getInstance().getReference().child("User");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot datasnapshot : snapshot.getChildren()){
+                for (DataSnapshot datasnapshot : snapshot.getChildren())
                     items.add((newitem) datasnapshot.getValue());
-                }
             }
 
             @Override
@@ -84,14 +84,39 @@ public class MainActivity extends AppCompatActivity {
     }*/
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         setUI();
 
+        ArrayList<String> items = new ArrayList<String>();
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.activity_item_details, items);
+        listView.setAdapter(adapter);
+
+        databaseReference = database.getInstance().getReference().child("User");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot datasnapshot : snapshot.getChildren())
+                    items.add( datasnapshot.getValue().toString());
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
 
 
+        });
+        btnshow.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                s = items.get(0).toString();
+                Log.d("show", "s");
+            }
+        });
     }
 }
