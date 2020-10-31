@@ -28,7 +28,7 @@ public class additem extends AppCompatActivity {
 
 
     private void setUI() {
-        //itmsrno = (EditText) findViewById(R.id.srview);
+
         itmname = (EditText) findViewById(R.id.nametext);
         itmquantity = (EditText) findViewById(R.id.quantitytext);
         itmtype = (EditText) findViewById(R.id.typetext);
