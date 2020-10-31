@@ -1,6 +1,7 @@
 package com.example.tracker;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -23,7 +24,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
     private TextView srno, name, quantity, type;
@@ -91,16 +97,23 @@ public class MainActivity extends AppCompatActivity {
 
         setUI();
 
-        ArrayList<String> items = new ArrayList<String>();
+        List<newitem> items = new ArrayList<newitem>();
+
+        Map<String,String> mp = new HashMap<String, String>();
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.activity_item_details, items);
+        /*for (int i = 0;i<items.size();i++){
+            ArrayAdapter adapter = new ArrayAdapter(this, R.layout.activity_item_details, Collections.singletonList(items.get(i).itmname));
+
+        }*/
         listView.setAdapter(adapter);
+
 
         databaseReference = database.getInstance().getReference().child("User");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot datasnapshot : snapshot.getChildren())
-                    items.add( datasnapshot.getValue().toString());
+                    items.add((newitem)datasnapshot.getValue());
                 adapter.notifyDataSetChanged();
             }
 
