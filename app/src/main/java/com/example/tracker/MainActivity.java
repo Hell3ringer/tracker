@@ -2,6 +2,8 @@ package com.example.tracker;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.icu.text.LocaleDisplayNames;
@@ -15,6 +17,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,13 +30,14 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private TextView srno, name, quantity, type;
-    private Button btnadd, btnshow;
+    private Button btnadd;
     private int Srno = 1;
     private newitem itmd;
     private String s;
     private ListView listView;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    private RecyclerView recyclerView;
 
 
     private void setUI() {
@@ -42,8 +46,13 @@ public class MainActivity extends AppCompatActivity {
         quantity = (TextView) findViewById(R.id.quantityview);
         type = (TextView) findViewById(R.id.typeview);
         btnadd = (Button) findViewById(R.id.btnadd);
-        btnshow = (Button) findViewById(R.id.btnshow);
-        listView = (ListView) findViewById(R.id.listview);
+
+        //listView = (ListView) findViewById(R.id.listview);
+
+        recyclerView = findViewById(R.id.recyclerview);
+        recyclerView.setHasFixedSize(true);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +92,23 @@ public class MainActivity extends AppCompatActivity {
 
     }*/
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseRecyclerAdapter<newitem,itemdetails>firebaseRecyclerAdapter =
+                new FirebaseRecyclerAdapter<newitem, itemdetails>(
+                        newitem.class,R.layout.itemdetails,itemdetails.class,databaseReference) {
+                    @Override
+                    protected void populateViewHolder(itemdetails itemdetails, newitem newitem, int i) {
+                        itemdetails.setView(
+                                getApplicationContext(),newitem.itmsrno,
+                                newitem.itmname,newitem.itmquantity,newitem.itmtype);
+                    }
+                };
+        recyclerView.setAdapter(firebaseRecyclerAdapter);
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,12 +117,15 @@ public class MainActivity extends AppCompatActivity {
 
         setUI();
 
+
+
         ArrayList<String> items = new ArrayList<String>();
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.activity_item_details, items);
-        listView.setAdapter(adapter);
+
+        //ArrayAdapter adapter = new ArrayAdapter(this, R.layout.activity_item_details, items);
+        //listView.setAdapter(adapter);
 
         databaseReference = database.getInstance().getReference().child("User");
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        /*databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot datasnapshot : snapshot.getChildren())
@@ -110,13 +139,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
-        });
-        btnshow.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        });*/
 
-                s = items.get(0).toString();
-                Log.d("show", "s");
-            }
-        });
     }
 }

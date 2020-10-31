@@ -24,7 +24,7 @@ public class additem extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private newitem itm;
 
-    private Integer srno = new Integer(0);
+    private Integer srno = new Integer(1);
 
 
     private void setUI() {
@@ -43,6 +43,7 @@ public class additem extends AppCompatActivity {
                 itm.setItmquantity(itmquantity.getText().toString());
                 itm.setItmtype(itmtype.getText().toString());
                 itm.setItmsrno(srno.toString());
+
 
                 databaseReference.child(String.valueOf(srno+1)).setValue(itm);
 

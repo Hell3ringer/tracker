@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -72,25 +73,26 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnadd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        android:layout_below="@id/mainLayout"/>
-    <Button
-        android:id="@+id/btnshow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Show"
-        android:layout_toRightOf="@+id/btnadd"
-        android:layout_below="@id/mainLayout"/>
-    <ListView
-        android:id="@+id/listview"
-        android:layout_below="@+id/btnadd"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"/>
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnadd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mainLayout"
+            android:text="Button" />
+
+
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 
 
@@ -98,7 +100,8 @@
 
 
 
-</RelativeLayout>
+
+</LinearLayout>
 
 
 

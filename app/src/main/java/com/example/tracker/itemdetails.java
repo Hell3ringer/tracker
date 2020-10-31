@@ -1,0 +1,32 @@
+package com.example.tracker;
+
+import android.content.Context;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class itemdetails extends RecyclerView.ViewHolder {
+    View view;
+    public itemdetails(@NonNull View itemView) {
+        super(itemView);
+
+        view = itemView;
+    }
+
+    public  void setView(Context context,String itmsrno,String itmname,String itmquantity,String itmtype){
+
+        TextView srnotv =view.findViewById(R.id.Srno);
+        TextView nametv =view.findViewById(R.id.Name);
+        EditText quantitytv =view.findViewById(R.id.Quantity);
+        TextView typetv =view.findViewById(R.id.Type);
+
+        srnotv.setText(itmsrno);
+        nametv.setText(itmname);
+        quantitytv.setText(itmquantity);
+        typetv.setText(itmtype);
+
+    }
+}
