@@ -30,7 +30,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private TextView srno, name, quantity, type;
-    private Button btnadd;
+    private Button btnadd,btndel;
     private int Srno = 1;
     private newitem itmd;
     private String s;
@@ -41,11 +41,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setUI() {
-        srno = (TextView) findViewById(R.id.srview);
+        //srno = (TextView) findViewById(R.id.srview);
         name = (TextView) findViewById(R.id.nameview);
         quantity = (TextView) findViewById(R.id.quantityview);
         type = (TextView) findViewById(R.id.typeview);
         btnadd = (Button) findViewById(R.id.btnadd);
+        btndel = (Button) findViewById(R.id.btndel);
 
         //listView = (ListView) findViewById(R.id.listview);
 
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     protected void populateViewHolder(itemdetails itemdetails, newitem newitem, int i) {
                         itemdetails.setView(
-                                getApplicationContext(),newitem.itmsrno,
+                                getApplicationContext(),
                                 newitem.itmname,newitem.itmquantity,newitem.itmtype);
                     }
                 };

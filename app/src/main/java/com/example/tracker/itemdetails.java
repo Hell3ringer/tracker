@@ -16,14 +16,14 @@ public class itemdetails extends RecyclerView.ViewHolder {
         view = itemView;
     }
 
-    public  void setView(Context context,String itmsrno,String itmname,String itmquantity,String itmtype){
+    public  void setView(Context context,String itmname,String itmquantity,String itmtype){
 
-        TextView srnotv =view.findViewById(R.id.Srno);
+        //TextView srnotv =view.findViewById(R.id.Srno);
         TextView nametv =view.findViewById(R.id.Name);
         EditText quantitytv =view.findViewById(R.id.Quantity);
         TextView typetv =view.findViewById(R.id.Type);
 
-        srnotv.setText(itmsrno);
+        //srnotv.setText(itmsrno);
         nametv.setText(itmname);
         quantitytv.setText(itmquantity);
         typetv.setText(itmtype);

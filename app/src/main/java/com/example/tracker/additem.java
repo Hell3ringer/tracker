@@ -42,7 +42,7 @@ public class additem extends AppCompatActivity {
                 itm.setItmname(itmname.getText().toString());
                 itm.setItmquantity(itmquantity.getText().toString());
                 itm.setItmtype(itmtype.getText().toString());
-                itm.setItmsrno(srno.toString());
+                //itm.setItmsrno(srno.toString());
 
 
                 databaseReference.child(String.valueOf(srno+1)).setValue(itm);
