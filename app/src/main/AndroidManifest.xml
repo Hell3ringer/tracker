@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Tracker">
-        <activity android:name=".Update"></activity>
+        <activity android:name=".Item_Details"></activity>
+        <activity android:name=".Update" />
         <activity android:name=".additem" />
         <activity android:name=".MainActivity">
             <intent-filter>
