@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
     private ArrayList<String> itemsArray = new ArrayList<>();
 
+    public MainActivity() {
+    }
+
     private void setUI() {
         //srno = (TextView) findViewById(R.id.srview);
         name = (TextView) findViewById(R.id.nameview);
@@ -61,6 +64,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
     }
     public void initRecyclerView(){
+        //LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        //recyclerView.setLayoutManager(linearLayoutManager);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
 
 
         recyclerViewAdapter = new RecyclerViewAdapter(itemsArray,this);
@@ -73,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         Intent intent = new Intent(this, additem.class);
         startActivity(intent);
     }
+
 
 
 
@@ -102,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
         setUI();
 
-        databaseReference = database.getInstance().getReference().child("User");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("User");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

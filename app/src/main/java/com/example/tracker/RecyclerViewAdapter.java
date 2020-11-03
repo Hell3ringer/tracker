@@ -1,6 +1,7 @@
 package com.example.tracker;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +15,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import static android.content.ContentValues.TAG;
+
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
     //private Context context;
     //private newitem item;
 
     private OnButtonClickListener onButtonClickListener;
-    private ArrayList<String> itemsArray = new ArrayList<>();
+    private ArrayList<String> itemsArray = new ArrayList<String>();
 
     public RecyclerViewAdapter(ArrayList<String> items,OnButtonClickListener onButtonClickListener) {
+        Log.d(TAG, "RecyclerViewAdapter: hemlo");
 
         this.itemsArray = items;
         this.onButtonClickListener = onButtonClickListener;
@@ -42,13 +46,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.itmname.setText(itemsArray.get(position));
         holder.itmquantity.setText(itemsArray.get(position));
         holder.itmtype.setText(itemsArray.get(position));
-        holder.btninfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-
-            }
-        });
 
 
     }
@@ -57,6 +55,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public int getItemCount() {
         return 0;
     }
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView itmname,itmquantity,itmtype;
