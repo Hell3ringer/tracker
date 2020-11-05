@@ -1,6 +1,7 @@
 package com.example.tracker;
 
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,41 +20,45 @@ import static android.content.ContentValues.TAG;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
-    //private Context context;
+    private Context context;
     //private newitem item;
 
-    private OnButtonClickListener onButtonClickListener;
-    private ArrayList<String> itemsArray = new ArrayList<String>();
+    //private OnButtonClickListener onButtonClickListener;
+    private ArrayList<Info> itemsArray = new ArrayList<>();
+    void firebasedata(ArrayList<Info> itemsArray){
+        this.itemsArray = itemsArray;
+    }
 
-    public RecyclerViewAdapter(ArrayList<String> items,OnButtonClickListener onButtonClickListener) {
+
+
+    public RecyclerViewAdapter(Context context,ArrayList<Info> items) {
+
         Log.d(TAG, "RecyclerViewAdapter: hemlo");
 
         this.itemsArray = items;
-        this.onButtonClickListener = onButtonClickListener;
+        this.context=context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemdetails,parent,false);
-        ViewHolder holder = new ViewHolder(view,onButtonClickListener);
+        ViewHolder holder = new ViewHolder(view);
         return holder;
     }
 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.itmname.setText(itemsArray.get(position));
-        holder.itmquantity.setText(itemsArray.get(position));
-        holder.itmtype.setText(itemsArray.get(position));
-
-
+        holder.itmname.setText(itemsArray.get(position).getName());
+        holder.itmquantity.setText(itemsArray.get(position).getQuantity());
+        holder.itmtype.setText(itemsArray.get(position).getType());
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return itemsArray.size();
     }
 
 
@@ -63,7 +68,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Button btninfo;
         CardView parentLayout;
         OnButtonClickListener onButtonClickListener;
-        public ViewHolder(@NonNull View itemView,OnButtonClickListener onButtonClickListener) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             itmname=itemView.findViewById(R.id.Name);
             itmquantity=itemView.findViewById(R.id.Quantity);

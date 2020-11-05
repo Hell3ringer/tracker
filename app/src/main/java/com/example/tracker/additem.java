@@ -18,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class additem extends AppCompatActivity {
-    private EditText itmsrno,itmname,itmquantity,itmtype;
+    private EditText itmname,itmquantity,itmtype;
     private Button btnok;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
@@ -42,17 +42,17 @@ public class additem extends AppCompatActivity {
                 itm.setItmname(itmname.getText().toString());
                 itm.setItmquantity(itmquantity.getText().toString());
                 itm.setItmtype(itmtype.getText().toString());
-                //itm.setItmsrno(srno.toString());
 
 
-                databaseReference.child(String.valueOf(srno+1)).setValue(itm);
+                srno++;
+                databaseReference.child(String.valueOf(srno)).setValue(itm);
 
                 setActivity();
             }
         });
     }
     private void firebase(){
-        databaseReference = database.getInstance().getReference().child("User");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("User");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
