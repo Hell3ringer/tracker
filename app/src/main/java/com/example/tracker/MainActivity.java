@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     private Button btnadd;
     private int Srno = 1;
     private newitem itmd;
+    private String s;
+    private ListView listView;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private RecyclerView recyclerView;
@@ -47,19 +49,21 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         quantity = (TextView) findViewById(R.id.quantityview);
         type = (TextView) findViewById(R.id.typeview);
         btnadd = (Button) findViewById(R.id.btnadd);
+        //listView = (ListView) findViewById(R.id.listview);
+
+        //recyclerView = findViewById(R.id.recyclerview);
+        //recyclerView.setHasFixedSize(true);
+
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         btnadd.setOnClickListener(v -> setActivity());
 
 
     }
     public void initRecyclerView(){
-        recyclerView=findViewById(R.id.recyclerview);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
 
 
-        recyclerViewAdapter = new RecyclerViewAdapter(this,itemsArray);
-        recyclerViewAdapter = new RecyclerViewAdapter(this,itemsArray);
+        recyclerViewAdapter = new RecyclerViewAdapter(itemsArray,this);
         recyclerView.setAdapter(recyclerViewAdapter);
 
     }
@@ -97,24 +101,30 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         setContentView(R.layout.activity_main);
 
         setUI();
-        initRecyclerView();
 
         databaseReference = database.getInstance().getReference().child("User");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                     itemsArray.add(snapshot.getValue().toString());
+                }
 
-                 //itemsArray.add(snapshot.getValue().toString());
-                 //Log.d("Arrysnap",snapshot.getValue().toString());
-                 initRecyclerView();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
-
             }
         });
+        initRecyclerView();
+
+
+
+
+
+        //ArrayAdapter adapter = new ArrayAdapter(this, R.layout., items);
+        //listView.setAdapter(adapter);
 
 
 

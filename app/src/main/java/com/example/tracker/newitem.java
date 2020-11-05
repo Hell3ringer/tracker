@@ -2,11 +2,14 @@ package com.example.tracker;
 
 public class newitem {
     String itmname,itmquantity,itmtype;
-    newitem(){
 
-    }
+    //public String getItmsrno() {
+    //    return itmsrno;
+    //}
 
-
+    //public void setItmsrno(String itmsrno) {
+       // this.itmsrno = itmsrno;
+    //}
 
     public String getItmname() {
         return itmname;
@@ -34,5 +37,7 @@ public class newitem {
 
 
 
+    newitem(){
 
+    }
 }

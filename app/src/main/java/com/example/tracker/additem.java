@@ -24,12 +24,11 @@ public class additem extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private newitem itm;
 
-    private Integer srno ;
-
+    private Integer srno = new Integer(1);
 
 
     private void setUI() {
-        //itmsrno = (EditText) findViewById(R.id.srview);
+
         itmname = (EditText) findViewById(R.id.nametext);
         itmquantity = (EditText) findViewById(R.id.quantitytext);
         itmtype = (EditText) findViewById(R.id.typetext);
@@ -43,10 +42,10 @@ public class additem extends AppCompatActivity {
                 itm.setItmname(itmname.getText().toString());
                 itm.setItmquantity(itmquantity.getText().toString());
                 itm.setItmtype(itmtype.getText().toString());
+                //itm.setItmsrno(srno.toString());
 
-                srno++;
-                databaseReference.child(String.valueOf(srno + 1)).setValue(itm);
-                Log.d("srno",srno.toString());
+
+                databaseReference.child(String.valueOf(srno+1)).setValue(itm);
 
                 setActivity();
             }

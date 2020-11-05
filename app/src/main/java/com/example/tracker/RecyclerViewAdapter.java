@@ -1,7 +1,6 @@
 package com.example.tracker;
 
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,23 +16,23 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
-    private Context context;
+    //private Context context;
     //private newitem item;
 
     private OnButtonClickListener onButtonClickListener;
     private ArrayList<String> itemsArray = new ArrayList<>();
 
-    public RecyclerViewAdapter(Context context,ArrayList<String> items) {
+    public RecyclerViewAdapter(ArrayList<String> items,OnButtonClickListener onButtonClickListener) {
 
         this.itemsArray = items;
-        this.context=context;
+        this.onButtonClickListener = onButtonClickListener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemdetails,parent,false);
-        ViewHolder holder = new ViewHolder(view);
+        ViewHolder holder = new ViewHolder(view,onButtonClickListener);
         return holder;
     }
 
@@ -64,7 +63,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Button btninfo;
         CardView parentLayout;
         OnButtonClickListener onButtonClickListener;
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView,OnButtonClickListener onButtonClickListener) {
             super(itemView);
             itmname=itemView.findViewById(R.id.Name);
             itmquantity=itemView.findViewById(R.id.Quantity);
