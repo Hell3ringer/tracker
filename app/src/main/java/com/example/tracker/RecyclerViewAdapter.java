@@ -3,19 +3,26 @@ package com.example.tracker;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
@@ -26,12 +33,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<String> itemsname = new ArrayList<String>();
     private ArrayList<String> itemsquantity = new ArrayList<String>();
     private ArrayList<String> itemstype = new ArrayList<String>();
+    private Map<Integer,String> map = new HashMap<Integer,String>();
 
-
-
-
-
-
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
 
     public RecyclerViewAdapter(ArrayList<String> itemsname,ArrayList<String> itemsquantity,ArrayList<String> itemstype,OnButtonClickListener onButtonClickListener) {
 
@@ -39,7 +44,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.itemsquantity = itemsquantity;
         this.itemstype = itemstype;
         this.onButtonClickListener=onButtonClickListener;
-        //this.context=context;
+
     }
 
     @NonNull
@@ -56,6 +61,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.itmname.setText(itemsname.get(position));
         holder.itmquantity.setText(itemsquantity.get(position));
         holder.itmtype.setText(itemstype.get(position));
+        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("position",String.valueOf(position));
+            }
+        });
+
+
 
     }
 

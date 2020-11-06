@@ -1,7 +1,7 @@
 package com.example.tracker;
 
 public class newitem {
-    String itmname,itmquantity,itmtype;
+    String itmname,itmquantity,itmtype,childID;
 
     //public String getItmsrno() {
     //    return itmsrno;
@@ -35,7 +35,13 @@ public class newitem {
         this.itmtype = itmtype;
     }
 
+    public String getChildID() {
+        return childID;
+    }
 
+    public void setChildID(String childID) {
+        this.childID = childID;
+    }
 
     newitem(){
 

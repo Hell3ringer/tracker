@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class Update extends AppCompatActivity {
     private EditText infoname,infoquantity,infotype;
     private Button btnupdate,btndel,btninfook;
-    private Integer position;
+    private String childID;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     newitem itm;
@@ -31,6 +31,8 @@ public class Update extends AppCompatActivity {
     private ArrayList<String> itemsname = new ArrayList<String>();
     private ArrayList<String> itemsquantity = new ArrayList<String>();
     private ArrayList<String> itemstype = new ArrayList<String>();
+    //private ArrayList<String> childID = new ArrayList<String>();
+
 
     private void setUI(){
         infoname = findViewById(R.id.nameupdate);
@@ -48,8 +50,8 @@ public class Update extends AppCompatActivity {
         btndel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("posdel",position.toString());
-                databaseReference.child(position.toString()).setValue(null);
+                //Log.d("posdel",position.toString());
+                databaseReference.child(childID).removeValue();
                 //databaseReference.child("User").child(position.toString()).child("itmquantity").removeValue();
                 //databaseReference.child("User").child(position.toString()).child("itmtype").removeValue();
                 setActivity();
@@ -76,10 +78,11 @@ public class Update extends AppCompatActivity {
                 itm.setItmquantity(infoquantity.getText().toString());
                 itm.setItmtype(infotype.getText().toString());
 
-                databaseReference.child(position.toString()).setValue(itm);
+
+                databaseReference.child(childID).setValue(itm);
                 //databaseReference.child("user").child(position.toString()).removeValue();
                 Log.d("positionname",itm.itmname.toString());
-                Log.d("postion",position.toString());
+                Log.d("postion",childID.toString());
                 setActivity();
 
             }
@@ -92,15 +95,22 @@ public class Update extends AppCompatActivity {
 
     private void firebaseWrite(){
         Intent intent=getIntent();
-        position=intent.getIntExtra("position",1);
-        Log.d("name",position.toString());
+        childID=intent.getStringExtra("position");
+        Log.d("name",childID.toString());
 
        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                infoname.setText(snapshot.child(position.toString()).child("itmname").getValue().toString());
-                infoquantity.setText(snapshot.child(position.toString()).child("itmquantity").getValue().toString());
-                infotype.setText(snapshot.child(position.toString()).child("itmtype").getValue().toString());
+                    String ID = snapshot.getKey();
+                    Log.d("IDchild",childID);
+
+
+
+                    infoname.setText(snapshot.child(childID).child("itmname").getValue().toString());
+                    infoquantity.setText(snapshot.child(childID).child("itmquantity").getValue().toString());
+                    infotype.setText(snapshot.child(childID).child("itmtype").getValue().toString());
+
+
 
             }
 

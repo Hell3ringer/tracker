@@ -19,9 +19,10 @@ import com.google.firebase.database.ValueEventListener;
 
 public class additem extends AppCompatActivity {
     private TextView itmname,itmquantity,itmtype;
+    private String childID;
     private Button btnok;
     private FirebaseDatabase database;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference,databaseReference1;
     private newitem itm;
 
     private Integer srno = new Integer(0);
@@ -42,8 +43,15 @@ public class additem extends AppCompatActivity {
                 itm.setItmname(itmname.getText().toString());
                 itm.setItmquantity(itmquantity.getText().toString());
                 itm.setItmtype(itmtype.getText().toString());
-                srno++;
-                databaseReference.child(srno.toString()).setValue(itm);
+
+
+
+                databaseReference1 = databaseReference.push();
+                childID=databaseReference1.getRef().getKey();
+                itm.setChildID(childID);
+                databaseReference1.setValue(itm);
+
+                Log.d("ID",childID);
 
                 setActivity();
             }

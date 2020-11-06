@@ -28,13 +28,16 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnButtonClickListener {
     private TextView name, quantity, type;
     private Button btnadd;
     private int Srno = 1;
     private newitem itmd;
+    private int no = 0;
 
 
     private FirebaseDatabase database;
@@ -46,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     private ArrayList<String> itemsname = new ArrayList<String>();
     private ArrayList<String> itemsquantity = new ArrayList<String>();
     private ArrayList<String> itemstype = new ArrayList<String>();
+    private ArrayList<String> childID = new ArrayList<String>();
+
 
     private void setUI() {
 
@@ -79,7 +84,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         //itemsname.get(position);
         Log.d("btnclick","clicked");
         Intent intent1 = new Intent(this,Update.class);
-        intent1.putExtra("position",position + 1);
+
+        intent1.putExtra("position",childID.get(position));
+        Log.d("pos",String.valueOf(position));
         startActivity(intent1);
     }
 
@@ -112,24 +119,38 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
         setUI();
         initRecyclerView();
-        final Integer[] no = {1};
+
         databaseReference = database.getInstance().getReference().child("User");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    int noofelements = (int)snapshot.getChildrenCount();
 
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    String name = snapshot.child(no[0].toString()).child("itmname").getValue().toString();
-                    itemsname.add(name);
-                    String quantity = snapshot.child(no[0].toString()).child("itmquantity").getValue().toString();
-                    itemsquantity.add(quantity);
-                    String type = snapshot.child(no[0].toString()).child("itmtype").getValue().toString();
-                    itemstype.add(type);
-                    no[0]++;
-                    Log.d("Arraysnap",name);
-                    initRecyclerView();
+                    for(DataSnapshot dataSnapshot : snapshot.getChildren()){
 
+
+                        String key = dataSnapshot.getRef().getKey();
+                        //map.put(pos)po
+                        Log.d("Arraykey",key);
+
+                        String name = dataSnapshot.child("itmname").getValue().toString();
+                        itemsname.add(name);
+                        String quantity = dataSnapshot.child("itmquantity").getValue().toString();
+                        itemsquantity.add(quantity);
+                        String type = dataSnapshot.child("itmtype").getValue().toString();
+                        itemstype.add(type);
+                        String IDchild = dataSnapshot.child("childID").getValue().toString();
+                        Log.d("ID1",IDchild);
+                        //childID.add(IDchild);
+                        Log.d("Arraysnap",name);
+                        //initRecyclerView();
+
+                    }
                 }
+                initRecyclerView();
+
+
             }
 
             @Override
