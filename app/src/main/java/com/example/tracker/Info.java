@@ -8,38 +8,38 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Info{
-    private String name,quantity,type;
+    private String itmname,itmquantity,itmtype;
 
     public Info() {
     }
 
-    public Info(String name, String quantity, String type) {
-        this.name = name;
-        this.quantity = quantity;
-        this.type = type;
+    public Info(String itmname, String itmquantity, String itmtype) {
+        this.itmname = itmname;
+        this.itmquantity = itmquantity;
+        this.itmtype = itmtype;
     }
 
-    public String getName() {
-        return name;
+    public String getitmname() {
+        return itmname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setitmname(String itmname) {
+        this.itmname = itmname;
     }
 
-    public String getQuantity() {
-        return quantity;
+    public String getitmquantity() {
+        return itmquantity;
     }
 
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
+    public void setitmquantity(String itmquantity) {
+        this.itmquantity = itmquantity;
     }
 
-    public String getType() {
-        return type;
+    public String getitmtype() {
+        return itmtype;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setitmtype(String itmtype) {
+        this.itmtype = itmtype;
     }
 }
