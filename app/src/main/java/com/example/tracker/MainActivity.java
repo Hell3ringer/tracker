@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.icu.text.LocaleDisplayNames;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
@@ -75,8 +76,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     }
     @Override
     public void onButtonClick(int position) {
-        itemsname.get(position);
+        //itemsname.get(position);
+        Log.d("btnclick","clicked");
         Intent intent1 = new Intent(this,Update.class);
+        intent1.putExtra("position",position + 1);
         startActivity(intent1);
     }
 
@@ -105,9 +108,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initRecyclerView();
+
 
         setUI();
+        initRecyclerView();
         final Integer[] no = {1};
         databaseReference = database.getInstance().getReference().child("User");
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -115,9 +119,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-
-
-
                     String name = snapshot.child(no[0].toString()).child("itmname").getValue().toString();
                     itemsname.add(name);
                     String quantity = snapshot.child(no[0].toString()).child("itmquantity").getValue().toString();
@@ -129,12 +130,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                     initRecyclerView();
 
                 }
-
-
-
-//                itemsArray.addAll((Collection<? extends Info>) info);
-//                initRecyclerView();
-
             }
 
             @Override

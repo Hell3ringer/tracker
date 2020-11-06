@@ -2,6 +2,7 @@ package com.example.tracker;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
-    private Context context;
+    //private Context context;
     //private newitem item;
 
     private OnButtonClickListener onButtonClickListener;
@@ -27,19 +28,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<String> itemstype = new ArrayList<String>();
 
 
-    public RecyclerViewAdapter(ArrayList<String> itemsname,ArrayList<String> itemsquantity,ArrayList<String> itemstype, Context context) {
+
+
+
+
+
+    public RecyclerViewAdapter(ArrayList<String> itemsname,ArrayList<String> itemsquantity,ArrayList<String> itemstype,OnButtonClickListener onButtonClickListener) {
 
         this.itemsname = itemsname;
         this.itemsquantity = itemsquantity;
         this.itemstype = itemstype;
-        this.context=context;
+        this.onButtonClickListener=onButtonClickListener;
+        //this.context=context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemdetails,parent,false);
-        ViewHolder holder = new ViewHolder(view);
+        ViewHolder holder = new ViewHolder(view,onButtonClickListener);
         return holder;
     }
 
@@ -50,9 +57,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.itmquantity.setText(itemsquantity.get(position));
         holder.itmtype.setText(itemstype.get(position));
 
-
-
     }
+
 
     @Override
     public int getItemCount() {
@@ -64,15 +70,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Button btninfo;
         RelativeLayout parentLayout;
         OnButtonClickListener onButtonClickListener;
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView,OnButtonClickListener onButtonClickListener) {
             super(itemView);
             itmname=itemView.findViewById(R.id.Name);
             itmquantity=itemView.findViewById(R.id.Quantity);
             itmtype=itemView.findViewById(R.id.Type);
             btninfo=itemView.findViewById(R.id.btninfo);
             parentLayout=itemView.findViewById(R.id.parent_layout);
+            this.onButtonClickListener=onButtonClickListener;
             btninfo.setOnClickListener(this);
         }
+
 
         @Override
         public void onClick(View v) {
