@@ -81,12 +81,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     }
     @Override
     public void onButtonClick(int position) {
-        //itemsname.get(position);
-        Log.d("btnclick","clicked");
+        Log.d("position23",String.valueOf(position));
         Intent intent1 = new Intent(this,Update.class);
 
         intent1.putExtra("position",childID.get(position));
-        Log.d("pos",String.valueOf(position));
         startActivity(intent1);
     }
 
@@ -142,9 +140,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                         itemstype.add(type);
                         String IDchild = dataSnapshot.child("childID").getValue().toString();
                         Log.d("ID1",IDchild);
-                        //childID.add(IDchild);
+                        childID.add(IDchild);
                         Log.d("Arraysnap",name);
-                        //initRecyclerView();
 
                     }
                 }

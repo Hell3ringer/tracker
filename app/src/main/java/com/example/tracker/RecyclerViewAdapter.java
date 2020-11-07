@@ -90,6 +90,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             itmtype=itemView.findViewById(R.id.Type);
             btninfo=itemView.findViewById(R.id.btninfo);
             parentLayout=itemView.findViewById(R.id.parent_layout);
+
             this.onButtonClickListener=onButtonClickListener;
             btninfo.setOnClickListener(this);
         }

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class Update extends AppCompatActivity {
     private EditText infoname,infoquantity,infotype;
     private Button btnupdate,btndel,btninfook;
-    private String childID;
+    private String childID ;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     newitem itm;
@@ -35,6 +35,7 @@ public class Update extends AppCompatActivity {
 
 
     private void setUI(){
+        Log.d("name11",childID);
         infoname = findViewById(R.id.nameupdate);
         infoquantity = findViewById(R.id.quantityupdate);
         infotype = findViewById(R.id.typeupdate);
@@ -42,74 +43,31 @@ public class Update extends AppCompatActivity {
         btndel = findViewById(R.id.btndelete);
         btninfook = findViewById(R.id.btnokupdate);
 
-        databaseReference = firebaseDatabase.getInstance().getReference().child("User");
+        databaseReference = firebaseDatabase.getInstance().getReference().child("User");                    //databasereference  till User
 
         firebaseWrite();
 
 
-        btndel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Log.d("posdel",position.toString());
-                databaseReference.child(childID).removeValue();
-                //databaseReference.child("User").child(position.toString()).child("itmquantity").removeValue();
-                //databaseReference.child("User").child(position.toString()).child("itmtype").removeValue();
-                setActivity();
-            }
-        });
-        btninfook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setActivity();
-            }
-        });
 
-
-
-
-
-        btnupdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                itm = new newitem();
-                itm.setItmname(infoname.getText().toString());
-                itm.setItmquantity(infoquantity.getText().toString());
-                itm.setItmtype(infotype.getText().toString());
-
-
-                databaseReference.child(childID).setValue(itm);
-                //databaseReference.child("user").child(position.toString()).removeValue();
-                Log.d("positionname",itm.itmname.toString());
-                Log.d("postion",childID.toString());
-                setActivity();
-
-            }
-        });
     }
-    private void  setActivity(){
+    private void  setActivitytoMain(){
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
     }
 
     private void firebaseWrite(){
-        Intent intent=getIntent();
-        childID=intent.getStringExtra("position");
-        Log.d("name",childID.toString());
-
        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    String ID = snapshot.getKey();
-                    Log.d("IDchild",childID);
 
+                try {
 
-
-                    infoname.setText(snapshot.child(childID).child("itmname").getValue().toString());
+                    infoname.setText(snapshot.child(childID).child("itmname").getValue().toString());                       //taking value from the firebase using the childID
                     infoquantity.setText(snapshot.child(childID).child("itmquantity").getValue().toString());
                     infotype.setText(snapshot.child(childID).child("itmtype").getValue().toString());
-
+                }catch (NullPointerException e){
+                    //Log.d("name2",""+childID);
+                }
 
 
             }
@@ -122,16 +80,46 @@ public class Update extends AppCompatActivity {
 
     }
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
 
-        setUI();
+        Intent intent=getIntent();
+        childID=intent.getStringExtra("position"); //getting id of the adapter
+
+            setUI();
+            btndel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    databaseReference.child(childID).removeValue();                                              // removing the childID child
+                    setActivitytoMain();
+                }
+            });
+            btninfook.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setActivitytoMain();
+                }
+            });
+            btnupdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    itm = new newitem();
+                    itm.setItmname(infoname.getText().toString());
+                    itm.setItmquantity(infoquantity.getText().toString());
+                    itm.setItmtype(infotype.getText().toString());
+                    itm.setChildID(childID);
+                    databaseReference.child(childID).setValue(itm);                                             //updating the values to firebase
+
+                    setActivitytoMain();
+
+                }
+            });
+
+
+
 
 
 
