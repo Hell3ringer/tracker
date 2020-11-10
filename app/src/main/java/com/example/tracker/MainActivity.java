@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -34,10 +37,15 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnButtonClickListener {
     private TextView name, quantity, type;
+
     private Button btnadd;
+    private  ImageButton searchbtn;
     private int Srno = 1;
     private newitem itmd;
     private int no = 0;
+    private String Search;
+    private Boolean flag = false;
+    private ValueEventListener valueEventListener;
 
 
     private FirebaseDatabase database;
@@ -59,8 +67,46 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         type = (TextView) findViewById(R.id.typeview);
         btnadd = (Button) findViewById(R.id.btnadd);
 
+        searchbtn=(ImageButton)findViewById(R.id.searchbtn);
+
+        searchbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("btn","btnclk");
+                flag = true;
+            }
+        });
+
 
         btnadd.setOnClickListener(v -> setActivity());
+
+        valueEventListener = new ValueEventListener() {
+
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                itemsname.clear();itemsquantity.clear();itemstype.clear();
+                if (snapshot.exists()){
+                    for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                        String name = dataSnapshot.child("itmname").getValue().toString();
+                        itemsname.add(name);
+                        String quantity = dataSnapshot.child("itmquantity").getValue().toString();
+                        itemsquantity.add(quantity);
+                        String type = dataSnapshot.child("itmtype").getValue().toString();
+                        itemstype.add(type);
+                        String IDchild = dataSnapshot.child("childID").getValue().toString();
+                        childID.add(IDchild);
+                    }
+                }
+                initRecyclerView();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
 
 
     }
@@ -79,6 +125,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         Intent intent = new Intent(this, additem.class);
         startActivity(intent);
     }
+    private  void setActivitytoSearch(){
+        Intent intent = new Intent(this, Search.class);
+        startActivity(intent);
+
+    }
     @Override
     public void onButtonClick(int position) {
         Log.d("position23",String.valueOf(position));
@@ -87,6 +138,58 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         intent1.putExtra("position",childID.get(position));
         startActivity(intent1);
     }
+    private void firebaseinfo() {
+        databaseReference = database.getInstance().getReference().child("User");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+
+
+                    for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                        String name = dataSnapshot.child("itmname").getValue().toString();
+                        itemsname.add(name);
+                        String quantity = dataSnapshot.child("itmquantity").getValue().toString();
+                        itemsquantity.add(quantity);
+                        String type = dataSnapshot.child("itmtype").getValue().toString();
+                        itemstype.add(type);
+                        String IDchild = dataSnapshot.child("childID").getValue().toString();
+                        childID.add(IDchild);
+                    }
+                }
+                initRecyclerView();
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    private void firebasesearch(String Search) {
+        databaseReference = database.getInstance().getReference().child("User");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String query = Search.toLowerCase();
+                Query firebasesearch = databaseReference.orderByChild("itmname").startAt(query).endAt(query + "\uf8ff");
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
+    }
+
 
 
 
@@ -116,47 +219,28 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
 
         setUI();
-        initRecyclerView();
-
+        //initRecyclerView();
+        firebaseinfo();
         databaseReference = database.getInstance().getReference().child("User");
-        databaseReference.addValueEventListener(new ValueEventListener() {
+
+        searchbtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    int noofelements = (int)snapshot.getChildrenCount();
-
-                    for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-
-
-                        String key = dataSnapshot.getRef().getKey();
-                        //map.put(pos)po
-                        Log.d("Arraykey",key);
-
-                        String name = dataSnapshot.child("itmname").getValue().toString();
-                        itemsname.add(name);
-                        String quantity = dataSnapshot.child("itmquantity").getValue().toString();
-                        itemsquantity.add(quantity);
-                        String type = dataSnapshot.child("itmtype").getValue().toString();
-                        itemstype.add(type);
-                        String IDchild = dataSnapshot.child("childID").getValue().toString();
-                        Log.d("ID1",IDchild);
-                        childID.add(IDchild);
-                        Log.d("Arraysnap",name);
-
-                    }
-                }
-                initRecyclerView();
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onClick(View v) {
+                setActivitytoSearch();
 
             }
         });
 
+
+
+
+
+
+
+
+        }
     }
 
 
-}
+
+

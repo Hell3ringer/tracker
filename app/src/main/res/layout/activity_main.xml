@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity"
     android:layout_width="match_parent"
@@ -67,13 +68,28 @@
 
         <Button
             android:id="@+id/btnadd"
+            style="@style/Widget.AppCompat.Button.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/mainLayout"
-            android:text="Button" />
+
+
+
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:icon="@android:drawable/ic_menu_add" />
+        <ImageButton
+            android:id="@+id/searchbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:background="#FFFFFF"
+            android:src="@android:drawable/ic_menu_search" />
+
+
 
 
     </LinearLayout>
+
 
 
     <androidx.recyclerview.widget.RecyclerView
