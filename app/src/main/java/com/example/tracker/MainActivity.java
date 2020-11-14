@@ -38,7 +38,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnButtonClickListener {
     private TextView name, quantity, type;
 
-    private Button btnadd;
+    private Button btnadd,btndash;
     private  ImageButton searchbtn;
     private int Srno = 1;
     private newitem itmd;
@@ -66,6 +66,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         quantity = (TextView) findViewById(R.id.quantityview);
         type = (TextView) findViewById(R.id.typeview);
         btnadd = (Button) findViewById(R.id.btnadd);
+        btndash = findViewById(R.id.btndash);
+        btndash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setActivitytoDash();
+            }
+        });
 
         searchbtn=(ImageButton)findViewById(R.id.searchbtn);
 
@@ -127,6 +134,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     }
     private  void setActivitytoSearch(){
         Intent intent = new Intent(this, Search.class);
+        startActivity(intent);
+
+    }
+    private  void setActivitytoDash(){
+        Intent intent = new Intent(this, Dashboard.class);
         startActivity(intent);
 
     }

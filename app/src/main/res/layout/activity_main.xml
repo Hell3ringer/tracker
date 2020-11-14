@@ -84,6 +84,11 @@
 
             android:background="#FFFFFF"
             android:src="@android:drawable/ic_menu_search" />
+        <Button
+            android:id="@+id/btndash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="dash"/>
 
 
 
