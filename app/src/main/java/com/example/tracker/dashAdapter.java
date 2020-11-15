@@ -63,12 +63,7 @@ public class dashAdapter extends RecyclerView.Adapter<dashAdapter.dashViewHolder
     public void onBindViewHolder(@NonNull dashAdapter.dashViewHolder holder, int position) {
         Glide.with(context).asBitmap().load(images.get(position)).into(holder.image);
         holder.category.setText(categories.get(position));
-        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("position",String.valueOf(position));
-            }
-        });
+
 
     }
 
