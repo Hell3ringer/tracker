@@ -58,7 +58,7 @@ public class additem extends AppCompatActivity {
         });
     }
     private void firebase(){
-        databaseReference = database.getInstance().getReference().child("User");
+        databaseReference = database.getInstance().getReference().child("User").child("General").child("items");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

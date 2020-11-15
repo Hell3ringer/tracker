@@ -44,7 +44,7 @@ public class Search extends AppCompatActivity implements SearchAdapter.OnButtonC
 
         btnback = findViewById(R.id.backbtn);
 
-        databaseReference = firebaseDatabase.getInstance().getReference().child("User");
+        databaseReference = firebaseDatabase.getInstance().getReference().child("User").child("General").child("items");
         valueEventListener = new ValueEventListener() {
 
 

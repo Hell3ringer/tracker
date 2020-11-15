@@ -43,7 +43,7 @@ public class Update extends AppCompatActivity {
         btndel = findViewById(R.id.btndelete);
         btninfook = findViewById(R.id.btnokupdate);
 
-        databaseReference = firebaseDatabase.getInstance().getReference().child("User");                    //databasereference  till User
+        databaseReference = firebaseDatabase.getInstance().getReference().child("User").child("General").child("items");                    //databasereference  till User
 
         firebaseWrite();
 

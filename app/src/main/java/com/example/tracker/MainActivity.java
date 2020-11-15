@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         startActivity(intent1);
     }
     private void firebaseinfo() {
-        databaseReference = database.getInstance().getReference().child("User");
+        databaseReference = database.getInstance().getReference().child("User").child("General").child("items");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         });
     }
     private void firebasesearch(String Search) {
-        databaseReference = database.getInstance().getReference().child("User");
+        databaseReference = database.getInstance().getReference().child("User").child("General").child("items");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         setUI();
         //initRecyclerView();
         firebaseinfo();
-        databaseReference = database.getInstance().getReference().child("User");
+        databaseReference = database.getInstance().getReference().child("User").child("General").child("items");
 
         searchbtn.setOnClickListener(new View.OnClickListener() {
             @Override
