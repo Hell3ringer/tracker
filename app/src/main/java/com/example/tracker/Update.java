@@ -27,6 +27,7 @@ public class Update extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     newitem itm;
+    private String catname;
 
     private ArrayList<String> itemsname = new ArrayList<String>();
     private ArrayList<String> itemsquantity = new ArrayList<String>();
@@ -35,7 +36,7 @@ public class Update extends AppCompatActivity {
 
 
     private void setUI(){
-        Log.d("name11",childID);
+
         infoname = findViewById(R.id.nameupdate);
         infoquantity = findViewById(R.id.quantityupdate);
         infotype = findViewById(R.id.typeupdate);
@@ -43,7 +44,7 @@ public class Update extends AppCompatActivity {
         btndel = findViewById(R.id.btndelete);
         btninfook = findViewById(R.id.btnokupdate);
 
-        databaseReference = firebaseDatabase.getInstance().getReference().child("User").child("General").child("items");                    //databasereference  till User
+        databaseReference = firebaseDatabase.getInstance().getReference().child("User").child(catname).child("items");                    //databasereference  till User
 
         firebaseWrite();
 
@@ -52,6 +53,7 @@ public class Update extends AppCompatActivity {
     }
     private void  setActivitytoMain(){
         Intent intent = new Intent(this,MainActivity.class);
+        intent.putExtra("catname",catname);
         startActivity(intent);
     }
 
@@ -86,7 +88,8 @@ public class Update extends AppCompatActivity {
         setContentView(R.layout.activity_update);
 
         Intent intent=getIntent();
-        childID=intent.getStringExtra("position"); //getting id of the adapter
+        catname = intent.getStringExtra("catname");
+        childID=intent.getStringExtra("childID"); //getting id of the adapter
 
             setUI();
             btndel.setOnClickListener(new View.OnClickListener() {

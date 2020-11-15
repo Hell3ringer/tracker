@@ -36,6 +36,7 @@ public class Search extends AppCompatActivity implements SearchAdapter.OnButtonC
     private ArrayList<String> childID = new ArrayList<String>();
     private  SearchAdapter SearchAdapter;
     private  String Search;
+    private  String catname;
 
 
     private void setUI(){
@@ -44,7 +45,7 @@ public class Search extends AppCompatActivity implements SearchAdapter.OnButtonC
 
         btnback = findViewById(R.id.backbtn);
 
-        databaseReference = firebaseDatabase.getInstance().getReference().child("User").child("General").child("items");
+        databaseReference = firebaseDatabase.getInstance().getReference().child("User").child(""+catname).child("items");
         valueEventListener = new ValueEventListener() {
 
 
@@ -75,6 +76,7 @@ public class Search extends AppCompatActivity implements SearchAdapter.OnButtonC
     }
     private void setActivity() {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("catname",catname);
         startActivity(intent);
     }
 
@@ -90,8 +92,9 @@ public class Search extends AppCompatActivity implements SearchAdapter.OnButtonC
     public void onButtonClick(int position) {
 
         Intent intent1 = new Intent(this,Update.class);
+        intent1.putExtra("catname",catname);
 
-        intent1.putExtra("position",childID.get(position));
+        intent1.putExtra("childID",childID.get(position));
         startActivity(intent1);
     }
 
@@ -99,6 +102,8 @@ public class Search extends AppCompatActivity implements SearchAdapter.OnButtonC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        Intent intent = getIntent();
+        catname = intent.getStringExtra("catname");
         setUI();
 
         searchbtn1.setOnClickListener(new View.OnClickListener() {

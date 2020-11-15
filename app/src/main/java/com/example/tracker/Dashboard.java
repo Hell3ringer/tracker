@@ -104,7 +104,7 @@ public class Dashboard extends AppCompatActivity implements com.example.tracker.
     public void onButtonClick(int position) {
         Intent intent1 = new Intent(this,MainActivity.class);
 
-        //intent1.putExtra("position",childID.get(position));
+        intent1.putExtra("catname",categories.get(position));
         startActivity(intent1);
     }
 }

@@ -24,6 +24,7 @@ public class additem extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference,databaseReference1;
     private newitem itm;
+    private String catname;
 
     private Integer srno = new Integer(0);
 
@@ -42,7 +43,7 @@ public class additem extends AppCompatActivity {
                 itm = new newitem();
                 itm.setItmname(itmname.getText().toString());
                 itm.setItmquantity(itmquantity.getText().toString());
-                itm.setItmtype(itmtype.getText().toString());
+                itm.setItmtype(catname);
 
 
 
@@ -58,7 +59,7 @@ public class additem extends AppCompatActivity {
         });
     }
     private void firebase(){
-        databaseReference = database.getInstance().getReference().child("User").child("General").child("items");
+        databaseReference = database.getInstance().getReference().child("User").child(catname).child("items");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -77,6 +78,7 @@ public class additem extends AppCompatActivity {
 
     private void setActivity(){
         Intent intent = new Intent(this,MainActivity.class);
+        intent.putExtra("catname",catname);
         startActivity(intent);
     }
 
@@ -84,6 +86,9 @@ public class additem extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_additem);
+        Intent intent = getIntent();
+        catname = intent.getStringExtra("catname");
+
         setUI();
 
     }

@@ -61,12 +61,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         holder.itmname.setText(itemsname.get(position));
         holder.itmquantity.setText(itemsquantity.get(position));
         holder.itmtype.setText(itemstype.get(position));
-        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("position",String.valueOf(position));
-            }
-        });
 
 
 
@@ -80,7 +74,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView itmname,itmquantity,itmtype;
-        Button btninfo;
+        Button btninfo1;
         RelativeLayout parentLayout;
         OnButtonClickListener onButtonClickListener;
         public ViewHolder(@NonNull View itemView,OnButtonClickListener onButtonClickListener) {
@@ -88,11 +82,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             itmname=itemView.findViewById(R.id.Name);
             itmquantity=itemView.findViewById(R.id.Quantity);
             itmtype=itemView.findViewById(R.id.Type);
-            btninfo=itemView.findViewById(R.id.btninfo);
+            btninfo1=itemView.findViewById(R.id.btninfo);
             parentLayout=itemView.findViewById(R.id.parent_layout);
 
             this.onButtonClickListener=onButtonClickListener;
-            btninfo.setOnClickListener(this);
+            btninfo1.setOnClickListener(this::onClick);
         }
 
 

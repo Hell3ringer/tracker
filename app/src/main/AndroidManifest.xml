@@ -20,7 +20,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Search" />
-        <activity android:name=".Item_Details" />
         <activity android:name=".Update" />
         <activity android:name=".additem" />
         <activity android:name=".MainActivity">

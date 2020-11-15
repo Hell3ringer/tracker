@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     private String Search;
     private Boolean flag = false;
     private ValueEventListener valueEventListener;
+    private String catname;
 
 
     private FirebaseDatabase database;
@@ -79,8 +80,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         searchbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("btn","btnclk");
-                flag = true;
+                setActivitytoSearch();
+
             }
         });
 
@@ -130,10 +131,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
     private void setActivity() {
         Intent intent = new Intent(this, additem.class);
+        intent.putExtra("catname",catname);
         startActivity(intent);
     }
     private  void setActivitytoSearch(){
         Intent intent = new Intent(this, Search.class);
+        intent.putExtra("catname",catname);
         startActivity(intent);
 
     }
@@ -146,12 +149,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     public void onButtonClick(int position) {
         Log.d("position23",String.valueOf(position));
         Intent intent1 = new Intent(this,Update.class);
+        intent1.putExtra("catname",catname);
 
-        intent1.putExtra("position",childID.get(position));
+        intent1.putExtra("childID",childID.get(position));
         startActivity(intent1);
     }
     private void firebaseinfo() {
-        databaseReference = database.getInstance().getReference().child("User").child("General").child("items");
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -180,68 +184,33 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             }
         });
     }
-    private void firebasesearch(String Search) {
-        databaseReference = database.getInstance().getReference().child("User").child("General").child("items");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String query = Search.toLowerCase();
-                Query firebasesearch = databaseReference.orderByChild("itmname").startAt(query).endAt(query + "\uf8ff");
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-
-
-    }
 
 
 
 
 
-    /*protected void onStart() {
-        super.onStart();
-        FirebaseRecyclerAdapter<newitem,itemdetails>firebaseRecyclerAdapter =
-                new FirebaseRecyclerAdapter<newitem, itemdetails>(
-                        newitem.class,R.layout.itemdetails,itemdetails.class,databaseReference) {
-                    @Override
-                    protected void populateViewHolder(itemdetails itemdetails, newitem newitem, int i) {
-                        itemdetails.setView(
-                                getApplicationContext(),
-                                newitem.itmname,newitem.itmquantity,newitem.itmtype);
-                    }
-                };
-        recyclerView.setAdapter(firebaseRecyclerAdapter);
 
 
-
-    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent1 = getIntent();
+        catname=intent1.getStringExtra("catname");
+
+
+        databaseReference = database.getInstance().getReference().child("User").child(""+catname).child("items");
+
+
 
         setUI();
-        //initRecyclerView();
+        initRecyclerView();
         firebaseinfo();
-        databaseReference = database.getInstance().getReference().child("User").child("General").child("items");
 
-        searchbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setActivitytoSearch();
 
-            }
-        });
+
 
 
 
