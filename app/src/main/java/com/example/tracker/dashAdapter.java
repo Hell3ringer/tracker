@@ -61,7 +61,7 @@ public class dashAdapter extends RecyclerView.Adapter<dashAdapter.dashViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull dashAdapter.dashViewHolder holder, int position) {
-        Glide.with(context).asBitmap().load(images.get(position)).load(holder.image);
+        Glide.with(context).asBitmap().load(images.get(position)).into(holder.image);
         holder.category.setText(categories.get(position));
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +82,7 @@ public class dashAdapter extends RecyclerView.Adapter<dashAdapter.dashViewHolder
     }
 
     public class dashViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView image;
+        ImageView image;
         TextView category;
         Button btninfo;
         LinearLayout parentLayout;
@@ -94,7 +94,7 @@ public class dashAdapter extends RecyclerView.Adapter<dashAdapter.dashViewHolder
             parentLayout=itemView.findViewById(R.id.dashrecycler);
 
             this.onButtonClickListener=onButtonClickListener;
-            btninfo.setOnClickListener(this);
+            parentLayout.setOnClickListener(this);
         }
 
 
