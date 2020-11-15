@@ -3,6 +3,7 @@ package com.example.tracker;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -41,13 +42,15 @@ public class Dashboard extends AppCompatActivity {
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cat = new category();
-
-
+                setActivity();
             }
         });
 
 
+    }
+    private void setActivity() {
+        Intent intent = new Intent(this, addCategory.class);
+        startActivity(intent);
     }
 
 
