@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -30,7 +31,9 @@ public class Dashboard extends AppCompatActivity implements com.example.tracker.
     private ImageButton btnadd;
 
 
-    private category cat;
+    private category cat1;
+    private String catname;
+    private long def;
 
     private ArrayList<String> images = new ArrayList<>();
     private ArrayList<String> categories = new ArrayList<>();
@@ -57,6 +60,8 @@ public class Dashboard extends AppCompatActivity implements com.example.tracker.
     }
     private void setActivity() {
         Intent intent = new Intent(this, addCategory.class);
+
+        intent.putExtra("catname",catname);
         startActivity(intent);
     }
     public void initdashRecyclerView(){
@@ -68,18 +73,41 @@ public class Dashboard extends AppCompatActivity implements com.example.tracker.
         dashAdapter = new dashAdapter(this,images,categories,this);
         recyclerView.setAdapter(dashAdapter);
     }
+    private void defaultvalues(){
+
+
+            cat1 = new category();
+            categories.add("Groceries");
+            images.add("https://imgur.com/gallery/53QR2iB");
+            categories.add("Books");
+            images.add("https://imgur.com/gallery/53QR2iB");
+
+            cat1.setCategory("Groceries");
+            cat1.setImage("https://imgur.com/gallery/53QR2iB");
+            databaseReference.child("Groceries").setValue(cat1);
+            cat1.setCategory("Books");
+            cat1.setImage("https://imgur.com/gallery/53QR2iB");
+            databaseReference.child("Books").setValue(cat1);
+
+
+
+    }
     private void firebaseinfo(){
         databaseReference=firebaseDatabase.getInstance().getReference().child("User");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    for (DataSnapshot dataSnapshot: snapshot.getChildren()){
-                        String catname=dataSnapshot.child("category").getValue().toString();
-                        categories.add(catname);
-                        images.add("image url");
+                def=snapshot.getChildrenCount();
+
+                if (snapshot.exists()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        catname = "" + dataSnapshot.child("category").getValue().toString();
+                        categories.add("" + catname);
+                        images.add("https://i.imgur.com/IdBpvVd_d.webp?maxwidth=760&fidelity=grand");
                     }
-                }initdashRecyclerView();
+                }
+                initdashRecyclerView();
+
             }
 
             @Override
@@ -94,10 +122,14 @@ public class Dashboard extends AppCompatActivity implements com.example.tracker.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard2);
+
         setUI();
         firebaseinfo();
+        Log.d("defvalue1",String.valueOf(def));
 
+        //defaultvalues();
 
+        Log.d("defvalue",String.valueOf(def));
     }
 
     @Override

@@ -18,7 +18,8 @@ public class addCategory extends AppCompatActivity {
     private Button btnok,btndel;
     private EditText catname;
 
-    private category cat;
+    private category cat,cat1;
+    private String catname1;
 
     private ArrayList<String> images = new ArrayList<>();
     private ArrayList<String> categories = new ArrayList<>();
@@ -38,10 +39,8 @@ public class addCategory extends AppCompatActivity {
             public void onClick(View v) {
                 cat = new category();
                 cat.setCategory(catname.getText().toString());
-                cat.setImage("Image url");
+                cat.setImage("https://i.imgur.com/53QR2iB_d.webp?maxwidth=760&fidelity=grand");
                 databaseReference.child(cat.getCategory()).setValue(cat);
-
-
                 setActivity();
             }
         });
@@ -50,7 +49,8 @@ public class addCategory extends AppCompatActivity {
     }
 
     private void setActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, Dashboard.class);
+        intent.putExtra("catname",catname1);
         startActivity(intent);
     }
 
@@ -58,6 +58,9 @@ public class addCategory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_category);
+        Intent intent=getIntent();
+        catname1=intent.getStringExtra("catname");
+
         setUI();
     }
 }

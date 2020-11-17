@@ -1,73 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F5F5"
     android:orientation="vertical"
-    android:layout_height="match_parent">
-
+    tools:context=".MainActivity">
     <LinearLayout
-        android:id="@+id/mainLayout"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/btndash"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="#BAAEAE"
+                android:src="@drawable/abc_vector_test" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#673AB7"
+                android:text="Inventory"
+                android:textSize="25sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/mainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/nameview"
-                android:layout_marginRight="80dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/name"/>
+                android:layout_marginRight="80dp"
+                android:text="@string/name" />
+
             <TextView
                 android:id="@+id/quantityview"
-                android:layout_marginRight="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/quantity"/>
+                android:layout_marginRight="10dp"
+                android:text="@string/quantity" />
+
             <TextView
                 android:id="@+id/typeview"
-                android:layout_marginRight="50dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="50dp"
                 android:text="@string/type" />
 
 
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/btnadd"
-            style="@style/Widget.AppCompat.Button.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/mainLayout"
+        </LinearLayout>
 
 
 
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            app:icon="@android:drawable/ic_menu_add" />
-        <ImageButton
-            android:id="@+id/searchbtn"
-            android:layout_width="wrap_content"
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-
-            android:background="#FFFFFF"
-            android:src="@android:drawable/ic_menu_search" />
-        <Button
-            android:id="@+id/btndash"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="dash"/>
-
+            android:background="#FFFFFF" />
 
 
 
@@ -75,20 +81,27 @@
 
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnadd"
 
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="10dp"
+        app:srcCompat="@android:drawable/ic_input_add" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/searchbtn"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_gravity="bottom"
+        android:layout_margin="10dp"
+        app:srcCompat="@android:drawable/ic_menu_search" />
 
 
-
-
-
-
-
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 

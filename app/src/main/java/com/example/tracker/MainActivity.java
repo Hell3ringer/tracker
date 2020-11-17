@@ -38,8 +38,8 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnButtonClickListener {
     private TextView name, quantity, type;
 
-    private Button btnadd,btndash;
-    private  ImageButton searchbtn;
+
+    private  ImageButton searchbtn,btndash,btnadd;
     private int Srno = 1;
     private newitem itmd;
     private int no = 0;
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         name = (TextView) findViewById(R.id.nameview);
         quantity = (TextView) findViewById(R.id.quantityview);
         type = (TextView) findViewById(R.id.typeview);
-        btnadd = (Button) findViewById(R.id.btnadd);
+        btnadd = findViewById(R.id.btnadd);
         btndash = findViewById(R.id.btndash);
         btndash.setOnClickListener(new View.OnClickListener() {
             @Override

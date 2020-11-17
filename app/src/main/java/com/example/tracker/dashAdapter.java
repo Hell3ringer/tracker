@@ -20,6 +20,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -61,10 +62,8 @@ public class dashAdapter extends RecyclerView.Adapter<dashAdapter.dashViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull dashAdapter.dashViewHolder holder, int position) {
-        Glide.with(context).asBitmap().load(images.get(position)).into(holder.image);
+        Glide.with(context).asBitmap().apply(RequestOptions.circleCropTransform()).load(images.get(position)).into(holder.image);
         holder.category.setText(categories.get(position));
-
-
     }
 
 

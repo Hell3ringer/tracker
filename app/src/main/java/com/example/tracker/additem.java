@@ -33,7 +33,7 @@ public class additem extends AppCompatActivity {
 
         itmname = (TextView) findViewById(R.id.nametext);
         itmquantity = (TextView) findViewById(R.id.quantitytext);
-        itmtype = (TextView) findViewById(R.id.typetext);
+
         btnok = (Button) findViewById(R.id.btnok);
         firebase();
 
