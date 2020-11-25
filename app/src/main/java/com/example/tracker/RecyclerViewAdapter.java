@@ -61,10 +61,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.itmname.setText(itemsname.get(position));
         holder.itmquantity.setText(itemsquantity.get(position));
         holder.itmtype.setText(itemstype.get(position));
-
-
-
-
     }
 
 

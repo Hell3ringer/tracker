@@ -18,7 +18,7 @@ public class addCategory extends AppCompatActivity {
     private Button btnok,btndel;
     private EditText catname;
 
-    private category cat,cat1;
+    private category cat,cat1,cat2,cat3;
     private String catname1;
 
     private ArrayList<String> images = new ArrayList<>();
@@ -28,11 +28,12 @@ public class addCategory extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
 
+
     private void setUI(){
         btnok=findViewById(R.id.btncatok);
         btndel=findViewById(R.id.btncatdel);
         catname=findViewById(R.id.catnameet);
-        databaseReference=firebaseDatabase.getInstance().getReference().child("User");
+
 
         btnok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +46,21 @@ public class addCategory extends AppCompatActivity {
             }
         });
 
+
+    }
+    private void defaultvalues(){
+        cat1 = new category();
+        cat1.setCategory("Groceries");
+        cat1.setImage("https://i.imgur.com/53QR2iB_d.webp?maxwidth=760&fidelity=grand");
+        databaseReference.child("Groceries").setValue(cat1);
+        cat2 = new category();
+        cat2.setCategory("Books");
+        cat2.setImage("https://i.imgur.com/53QR2iB_d.webp?maxwidth=760&fidelity=grand");
+        databaseReference.child("Books").setValue(cat2);
+        cat3 = new category();
+        cat3.setCategory("Misc");
+        cat3.setImage("https://i.imgur.com/53QR2iB_d.webp?maxwidth=760&fidelity=grand");
+        databaseReference.child("Misc").setValue(cat3);
 
     }
 
@@ -60,6 +76,8 @@ public class addCategory extends AppCompatActivity {
         setContentView(R.layout.activity_add_category);
         Intent intent=getIntent();
         catname1=intent.getStringExtra("catname");
+        databaseReference=firebaseDatabase.getInstance().getReference().child("User");
+        //defaultvalues();
 
         setUI();
     }

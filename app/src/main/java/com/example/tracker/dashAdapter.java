@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -38,6 +39,7 @@ public class dashAdapter extends RecyclerView.Adapter<dashAdapter.dashViewHolder
     
     private ArrayList<String> images = new ArrayList<>();
     private ArrayList<String> categories = new ArrayList<>();
+
 
 
     private FirebaseDatabase firebaseDatabase;
@@ -79,6 +81,7 @@ public class dashAdapter extends RecyclerView.Adapter<dashAdapter.dashViewHolder
         ImageView image;
         TextView category;
         Button btninfo;
+        ImageButton btncatdel;
         LinearLayout parentLayout;
         OnButtonClickListener onButtonClickListener;
         public dashViewHolder(@NonNull View itemView,OnButtonClickListener onButtonClickListener) {
@@ -86,9 +89,13 @@ public class dashAdapter extends RecyclerView.Adapter<dashAdapter.dashViewHolder
             image=itemView.findViewById(R.id.image);
             category=itemView.findViewById(R.id.category);
             parentLayout=itemView.findViewById(R.id.dashrecycler);
+            btncatdel=itemView.findViewById(R.id.btndelcat);
+
+
 
             this.onButtonClickListener=onButtonClickListener;
             parentLayout.setOnClickListener(this);
+            btncatdel.setOnClickListener(this);
         }
 
 

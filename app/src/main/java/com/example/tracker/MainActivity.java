@@ -202,23 +202,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
 
         databaseReference = database.getInstance().getReference().child("User").child(""+catname).child("items");
-
-
-
         setUI();
         initRecyclerView();
         firebaseinfo();
-
-
-
-
-
-
-
-
-
-
-
         }
     }
 

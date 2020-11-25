@@ -28,12 +28,14 @@ public class Dashboard extends AppCompatActivity implements com.example.tracker.
 
     private ImageView image;
     private RecyclerView recyclerView;
-    private ImageButton btnadd;
+    private ImageButton btnadd,btncatdel;
 
 
-    private category cat1;
+
+    private category cat1,cat2,cat3;
     private String catname;
     private long def;
+    private int position;
 
     private ArrayList<String> images = new ArrayList<>();
     private ArrayList<String> categories = new ArrayList<>();
@@ -47,6 +49,14 @@ public class Dashboard extends AppCompatActivity implements com.example.tracker.
     private void setUI(){
         btnadd = findViewById(R.id.floatingadd);
         image = findViewById(R.id.image);
+        btncatdel = findViewById(R.id.btndelcat);
+
+//        btncatdel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,27 +83,27 @@ public class Dashboard extends AppCompatActivity implements com.example.tracker.
         dashAdapter = new dashAdapter(this,images,categories,this);
         recyclerView.setAdapter(dashAdapter);
     }
+
     private void defaultvalues(){
-
-
-            cat1 = new category();
-            categories.add("Groceries");
-            images.add("https://imgur.com/gallery/53QR2iB");
-            categories.add("Books");
-            images.add("https://imgur.com/gallery/53QR2iB");
-
-            cat1.setCategory("Groceries");
-            cat1.setImage("https://imgur.com/gallery/53QR2iB");
-            databaseReference.child("Groceries").setValue(cat1);
-            cat1.setCategory("Books");
-            cat1.setImage("https://imgur.com/gallery/53QR2iB");
-            databaseReference.child("Books").setValue(cat1);
-
-
+        //categories.add("Groceries");
+        //categories.add("Books");
+        //categories.add("Misc");
+        cat1 = new category();
+        cat1.setCategory("Groceries");
+        cat1.setImage("https://i.imgur.com/53QR2iB_d.webp?maxwidth=760&fidelity=grand");
+        databaseReference.child("Groceries").setValue(cat1);
+        cat2 = new category();
+        cat2.setCategory("Books");
+        cat2.setImage("https://i.imgur.com/53QR2iB_d.webp?maxwidth=760&fidelity=grand");
+        databaseReference.child("Books").setValue(cat2);
+        cat3 = new category();
+        cat3.setCategory("Misc");
+        cat3.setImage("https://i.imgur.com/53QR2iB_d.webp?maxwidth=760&fidelity=grand");
+        databaseReference.child("Misc").setValue(cat3);
 
     }
     private void firebaseinfo(){
-        databaseReference=firebaseDatabase.getInstance().getReference().child("User");
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -122,14 +132,12 @@ public class Dashboard extends AppCompatActivity implements com.example.tracker.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard2);
+        databaseReference=firebaseDatabase.getInstance().getReference().child("User");
 
         setUI();
+        defaultvalues();
         firebaseinfo();
-        Log.d("defvalue1",String.valueOf(def));
 
-        //defaultvalues();
-
-        Log.d("defvalue",String.valueOf(def));
     }
 
     @Override
