@@ -31,19 +31,20 @@
     </LinearLayout>
 
 
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingadd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
         android:layout_gravity="bottom|end"
+        android:layout_margin="10dp"
 
+        android:background="#F44336"
         android:clickable="true"
+        android:focusable="true"
+        app:backgroundTint="#F44336"
         app:srcCompat="@android:drawable/ic_input_add"
         tools:layout_editor_absoluteX="306dp"
-        tools:layout_editor_absoluteY="735dp"
-        android:focusable="true" />
+        tools:layout_editor_absoluteY="735dp" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

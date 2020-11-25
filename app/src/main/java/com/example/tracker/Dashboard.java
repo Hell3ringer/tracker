@@ -49,7 +49,7 @@ public class Dashboard extends AppCompatActivity implements com.example.tracker.
     private void setUI(){
         btnadd = findViewById(R.id.floatingadd);
         image = findViewById(R.id.image);
-        btncatdel = findViewById(R.id.btndelcat);
+        //btncatdel = findViewById(R.id.btndelcat);
 
 //        btncatdel.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -85,21 +85,31 @@ public class Dashboard extends AppCompatActivity implements com.example.tracker.
     }
 
     private void defaultvalues(){
-        //categories.add("Groceries");
-        //categories.add("Books");
-        //categories.add("Misc");
+//        categories.add("Groceries");
+//        categories.add("Books");
+//        categories.add("Misc");
+//        images.add("https://i.imgur.com/XhTjOMu.png");
+//        images.add("https://i.imgur.com/U9tdGo6_d.webp?maxwidth=760&fidelity=grand");
+//        images.add("https://i.imgur.com/53QR2iB_d.webp?maxwidth=760&fidelity=grand");
         cat1 = new category();
         cat1.setCategory("Groceries");
-        cat1.setImage("https://i.imgur.com/53QR2iB_d.webp?maxwidth=760&fidelity=grand");
+        cat1.setImage("https://i.imgur.com/XhTjOMu.png");
         databaseReference.child("Groceries").setValue(cat1);
-        cat2 = new category();
-        cat2.setCategory("Books");
-        cat2.setImage("https://i.imgur.com/53QR2iB_d.webp?maxwidth=760&fidelity=grand");
-        databaseReference.child("Books").setValue(cat2);
-        cat3 = new category();
-        cat3.setCategory("Misc");
-        cat3.setImage("https://i.imgur.com/53QR2iB_d.webp?maxwidth=760&fidelity=grand");
-        databaseReference.child("Misc").setValue(cat3);
+        cat1 = new category();
+        cat1.setCategory("Books");
+        cat1.setImage("https://i.imgur.com/U9tdGo6_d.webp?maxwidth=760&fidelity=grand");
+        databaseReference.child("Books").setValue(cat1);
+        cat1 = new category();
+        cat1.setCategory("Furniture");
+        cat1.setImage("https://i.imgur.com/X0qnvfp.png");
+        databaseReference.child("Furniture").setValue(cat1);
+        cat1 = new category();
+        cat1.setCategory("Applainces");
+        cat1.setImage("https://i.imgur.com/UpUzKwA.png");
+        databaseReference.child("Applainces").setValue(cat1);
+        cat1 = new category();
+
+
 
     }
     private void firebaseinfo(){
@@ -109,11 +119,35 @@ public class Dashboard extends AppCompatActivity implements com.example.tracker.
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 def=snapshot.getChildrenCount();
 
+                Log.d("posss",String.valueOf(def));
+
                 if (snapshot.exists()) {
+
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        catname = "" + dataSnapshot.child("category").getValue().toString();
-                        categories.add("" + catname);
-                        images.add("https://i.imgur.com/IdBpvVd_d.webp?maxwidth=760&fidelity=grand");
+
+                            catname = "" + dataSnapshot.child("category").getValue().toString();
+                            categories.add("" + catname);
+                            switch (catname){
+                                case "Groceries":
+                                    images.add("https://i.imgur.com/XhTjOMu.png");
+                                    break;
+                                case "Books":
+                                    images.add("https://i.imgur.com/U9tdGo6_d.webp?maxwidth=760&fidelity=grand");
+                                    break;
+                                case "Furniture":
+                                    images.add("https://i.imgur.com/X0qnvfp.png");
+                                    break;
+                                case "Applainces":
+                                    images.add("https://i.imgur.com/UpUzKwA.png");
+                                    break;
+                                default:
+                                    images.add("https://i.imgur.com/EDT2Rtp.png");
+
+
+
+
+
+                        }
                     }
                 }
                 initdashRecyclerView();
@@ -135,7 +169,12 @@ public class Dashboard extends AppCompatActivity implements com.example.tracker.
         databaseReference=firebaseDatabase.getInstance().getReference().child("User");
 
         setUI();
-        defaultvalues();
+        int i =1;
+        if (i == 1){
+            defaultvalues();
+            i = 0;
+        }
+
         firebaseinfo();
 
     }
@@ -147,4 +186,9 @@ public class Dashboard extends AppCompatActivity implements com.example.tracker.
         intent1.putExtra("catname",categories.get(position));
         startActivity(intent1);
     }
+
+//    @Override
+//    public void onButtonClickDelete(int position) {
+//        databaseReference.child(categories.get(position)).removeValue();
+//    }
 }

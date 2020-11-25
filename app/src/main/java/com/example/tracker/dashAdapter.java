@@ -36,6 +36,7 @@ public class dashAdapter extends RecyclerView.Adapter<dashAdapter.dashViewHolder
 
 
     private OnButtonClickListener onButtonClickListener;
+    //private OnButtonDelete onButtonDelete;
     
     private ArrayList<String> images = new ArrayList<>();
     private ArrayList<String> categories = new ArrayList<>();
@@ -51,6 +52,7 @@ public class dashAdapter extends RecyclerView.Adapter<dashAdapter.dashViewHolder
         this.context = context;
         this.categories = categories;
         this.onButtonClickListener=onButtonClickListener;
+        //this.onButtonDelete=onButtonDelete;
 
     }
 
@@ -83,29 +85,37 @@ public class dashAdapter extends RecyclerView.Adapter<dashAdapter.dashViewHolder
         Button btninfo;
         ImageButton btncatdel;
         LinearLayout parentLayout;
+        View.OnClickListener onClickListener;
         OnButtonClickListener onButtonClickListener;
+        //OnButtonDelete onButtonDelete;
         public dashViewHolder(@NonNull View itemView,OnButtonClickListener onButtonClickListener) {
             super(itemView);
             image=itemView.findViewById(R.id.image);
             category=itemView.findViewById(R.id.category);
             parentLayout=itemView.findViewById(R.id.dashrecycler);
-            btncatdel=itemView.findViewById(R.id.btndelcat);
+            //btncatdel=itemView.findViewById(R.id.btndelcat);
 
 
 
             this.onButtonClickListener=onButtonClickListener;
+            //this.onButtonDelete = onButtonDelete;
             parentLayout.setOnClickListener(this);
-            btncatdel.setOnClickListener(this);
+            //btncatdel.setOnClickListener(this);
         }
 
 
         @Override
         public void onClick(View v) {
             onButtonClickListener.onButtonClick(getAdapterPosition());
+           // onButtonDelete.onButtonClickDelete(getAdapterPosition());
         }
     }
 
     public interface OnButtonClickListener{
         void onButtonClick(int position);
     }
+//    public interface OnButtonDelete{
+//        void onButtonClickDelete(int position);
+//    }
+
 }
